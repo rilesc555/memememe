@@ -1,14 +1,17 @@
+# %% 
 from math import radians, isnan, pi
 from random import uniform, choice
 from time import time, sleep
 from sys import path
-from noise import snoise2, snoise4
+# from noise import snoise2, snoise4
 from vector3 import Vector3
 from stewartPlatformMath import StewartPlatformMath
 
+# %%
 path.append("../ax12")
 from ax12 import Ax12
 
+#%%
 class PlatformPosition:
     def __init__(self, translation=Vector3(), rotation=Vector3()):
         self.translation = translation
@@ -367,6 +370,6 @@ class StewartPlatform:
                 try:
                     self.servos.moveSpeedRW((i+1), servoValue, 256)
                 except:
-                    print "3rd time. oooops."
+                    print("3rd time. oooops.")
 
         self.servos.action()

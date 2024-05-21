@@ -6,9 +6,9 @@ and Josue Alejandro Savage's Arduino library:
 http://savageelectronics.blogspot.it/2011/01/arduino-y-dynamixel-ax-12.html
 '''
 
-from time import sleep
+from time import sleep, time
 from serial import Serial
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
 class Ax12:
     # important AX-12 constants
@@ -181,7 +181,7 @@ class Ax12:
             error = ord(reply[4])
 
             if(error != 0):
-                print "Error from servo: " + Ax12.dictErrors[error] + ' (code  ' + hex(error) + ')'
+                print("Error from servo: " + Ax12.dictErrors[error] + ' (code  ' + hex(error) + ')')
                 return -error
             # just reading error bit
             elif(length == 0):
@@ -194,8 +194,8 @@ class Ax12:
                     reply = Ax12.port.read(1)
                     returnValue = ord(reply[0])
                 return returnValue
-        except Exception, detail:
-            raise Ax12.axError(detail)
+        except (Exception):
+            raise Ax12.axError("Error reading from servo " + str(id))
 
     def ping(self,id):
         self.direction(Ax12.RPI_DIRECTION_TX)
@@ -226,7 +226,7 @@ class Ax12:
             sleep(Ax12.TX_DELAY_TIME)
             return self.readData(id)
         else:
-            print "nothing done, please send confirm = True as this fuction reset to the factory default value, i.e reset the motor ID"
+            print("nothing done, please send confirm = True as this fuction reset to the factory default value, i.e reset the motor ID")
             return
 
     def setID(self, id, newId):
@@ -694,11 +694,11 @@ class Ax12:
             try :
                 temp = self.ping(i)
                 servoList.append(i)
-                if verbose: print "Found servo #" + str(i)
+                if verbose: print("Found servo #" + str(i))
                 time.sleep(0.1)
 
-            except Exception, detail:
-                if verbose : print "Error pinging servo #" + str(i) + ': ' + str(detail)
+            except Exception:
+                if verbose : print("Error pinging servo #" + str(i) + ': ' + str(Exception))
                 pass
         return servoList
 
